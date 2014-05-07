@@ -8,7 +8,7 @@ angular.module('galleryApp', [
     $routeProvider
         .when('/', {
             templateUrl: 'views/main.html',
-            controller: 'MainCtrl'
+            controller: 'galleryController'
         })
          .when('/gallery', {
             templateUrl: 'views/main2.html',

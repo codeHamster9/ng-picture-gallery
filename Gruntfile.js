@@ -66,7 +66,7 @@ module.exports = function(grunt) {
             options: {
                 port: 9000,
                 // Change this to '192.168.0.103' to access the server from outside.
-                hostname: '192.168.0.103',
+                hostname: '192.168.0.104',
                 livereload: 35729
             },
             livereload: {
@@ -200,16 +200,16 @@ module.exports = function(grunt) {
             }
         },
 
-        imagemin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.{png,jpg,jpeg,gif}',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
-            }
-        },
+        // imagemin: {
+        //     dist: {
+        //         files: [{
+        //             expand: true,
+        //             cwd: '<%= yeoman.app %>/images',
+        //             src: '{,*/}*.{png,jpg,jpeg,gif}',
+        //             dest: '<%= yeoman.dist %>/images'
+        //         }]
+        //     }
+        // },
 
         svgmin: {
             dist: {
@@ -254,11 +254,11 @@ module.exports = function(grunt) {
         },
 
         // Replace Google CDN references
-        cdnify: {
-            dist: {
-                html: ['<%= yeoman.dist %>/*.html']
-            }
-        },
+        // cdnify: {
+        //     dist: {
+        //         html: ['<%= yeoman.dist %>/*.html']
+        //     }
+        // },
 
         // Copies remaining files to places other tasks can use
         copy: {
@@ -379,7 +379,7 @@ module.exports = function(grunt) {
         'concat',
         'ngmin',
         'copy:dist',
-        'cdnify',
+        // 'cdnify',
         'cssmin',
         'uglify',
         'rev',

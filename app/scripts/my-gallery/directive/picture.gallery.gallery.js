@@ -6,7 +6,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 collection: '=?'
             },
             restrict: 'E',
-            templateUrl: 'scripts/my-gallery/template/my-gallery.html',            
+            templateUrl: 'scripts/my-gallery/template/picture-gallery.html',            
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
@@ -108,7 +108,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 $scope.open = function(image) {
 
                     var modalInstance = $modal.open({
-                        templateUrl: 'scripts/my-gallery/template/my-gallery-popup.html',
+                        templateUrl: 'scripts/my-gallery/template/picture-gallery-popup.html',
                         controller: ModalInstanceCtrl,
                         backdrop: true,
                         resolve: {

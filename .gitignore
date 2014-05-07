@@ -3,3 +3,7 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+
+node_modules.rar
+app/images/Thumbs.db
+app/images/Thumbs.db
