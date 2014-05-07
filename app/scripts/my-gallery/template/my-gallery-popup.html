@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <b>{{ image.title }}</b>
+</div>
+<div class="modal-body">
+    <img ng-src={{image.url}}>
+</div>
+<div class="modal-footer">
+    <button ng-click="back()">Back</button>
+    <input type="checkbox" ng-model="slideShow" ng-change="slideShowToggle()">
+    <p>Auto Cycle</p>
+    </input>
+    <p>Auto Cycle</p>
+    </input>
+    <button ng-click="next()">Next</button>
+</div>

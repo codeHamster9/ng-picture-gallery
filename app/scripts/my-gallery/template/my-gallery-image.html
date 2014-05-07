@@ -1,0 +1,6 @@
+<div class="image-frame" ng-click="imageClicked(image)">
+    <button class="close-btn" ng-click="removeImage(image)"></button>
+    <p class="image-title">{{image.title}}</p>
+    <img class="gallery-image" ng-src={{image.url}} fallbacksrc="http://google.com/favicon.ico">
+    <p class="image-date">{{image.date | date:'short'}}</p>
+</div>
