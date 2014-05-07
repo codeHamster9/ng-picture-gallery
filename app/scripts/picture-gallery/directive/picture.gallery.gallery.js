@@ -6,7 +6,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 collection: '=?'
             },
             restrict: 'E',
-            templateUrl: 'scripts/my-gallery/template/picture-gallery.html',            
+            templateUrl: 'scripts/picture-gallery/template/picture-gallery.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
@@ -29,6 +29,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                     value: 'title'
                 }];
 
+
                 $scope.$watch('searchText', function(newValue, oldValue) {
                     if (newValue !== '')
                         $scope.collection = filterByText(newValue);
@@ -37,11 +38,16 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
 
                     totalPages($scope.collection.length);
                     $scope.currentPage = 0;
-                });
+                }); 
 
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
+                    if ($scope.pageSize > 10) {
+                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'block');
+                    } else if ($scope.pageSize <= 10) {
+                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'none');
+                    }
                 });
 
 
@@ -49,6 +55,18 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                     $mygallery.getImages(iAttrs.url).then(function(data) {
                         $scope.collection = originCollection = data;
                     });
+                }
+
+                $scope.moveNext = function() {
+                    iElm[0].querySelector('.gallery-image-container').scrollLeft += 400;
+                    angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'block');
+                }
+
+                $scope.movePrevious = function() {
+                    iElm[0].querySelector('.gallery-image-container').scrollLeft -= 400;
+                    var scroll = iElm[0].querySelector('.gallery-image-container').scrollLeft;
+                    if (scroll == 0)
+                        angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'none');
                 }
 
                 function totalPages(length) {
@@ -108,7 +126,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 $scope.open = function(image) {
 
                     var modalInstance = $modal.open({
-                        templateUrl: 'scripts/my-gallery/template/picture-gallery-popup.html',
+                        templateUrl: 'scripts/picture-gallery/template/picture-gallery-popup.html',
                         controller: ModalInstanceCtrl,
                         backdrop: true,
                         resolve: {

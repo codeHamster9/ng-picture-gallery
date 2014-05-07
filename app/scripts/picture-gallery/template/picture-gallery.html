@@ -1,5 +1,5 @@
 <div class="gallery">
-    <div class="gallery-ribbon">
+    <div class="gallery-ribbon gallery-component">
         <div class="gallery-ribbon-controls">
             <h1>Image Gallery widget</h1>
             <select ng-model='pageSize' ng-options="page for page in pageSizes"></select>
@@ -7,13 +7,15 @@
             <select ng-model="sortType" ng-options="st.value as st.name for st in sortTypes"></select>
         </div>
     </div>
-    <div class="gallery-image-container">
+    <div class="gallery-image-container gallery-component">
+        <button class="arrowBtn previousBtn" ng-click="movePrevious()"></button>
         <div class="gallery-image-strip">
             <my-gallery-image ng-repeat="image in filteredCollection = (collection | orderBy:sortType:false | startFrom:currentPage*pageSize | limitTo: pageSize)">
             </my-gallery-image>
         </div>
+        <button class="arrowBtn nextBtn" ng-click="moveNext()"></button>
     </div>
-    <div class="gallery-footer">
+    <div class="gallery-footer gallery-component">
         <div class="footer-controls">
             <button ng-disabled="currentPage==0" ng-click="currentPage=currentPage-1">Back</button>
             {{currentPage+1}}/{{pages}}

@@ -2,7 +2,7 @@
 angular.module('ng-pictureGallery').directive('myGalleryImage', function() {
         return {
             restrict: 'E',
-            templateUrl: 'scripts/my-gallery/template/picture-gallery-image.html',
+            templateUrl: 'scripts/picture-gallery/template/picture-gallery-image.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
