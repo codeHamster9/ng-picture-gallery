@@ -7,7 +7,7 @@
  */
 
 angular.module("my.gallery.tpls", ["template/gallery/my-gallery.html", "template/gallery/my-gallery-image.html", "template/gallery/my-gallery-popup.html"]);
-angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service('$mygallery', ['$http', '$q',
+angular.module('ng-pictureGallery', ['ui.bootstrap','my.gallery.tpls']).service('$mygallery', ['$http', '$q',
     function($http, $q) {
 
         var sessionStore, that = this;
