@@ -13,7 +13,12 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 if (angular.isUndefined($scope.collection))
                     $scope.collection = [];
 
-                var originCollection = $scope.collection;
+                var originCollection = $scope.collection,
+                    nextBtn, previousBtn, container;
+
+                container = iElm[0].getElementsByClassName('gallery-image-container')[0];
+                nextBtn = angular.element(iElm[0].getElementsByClassName('nextBtn'));
+                previousBtn = angular.element(iElm[0].getElementsByClassName('previousBtn'));
 
                 $scope.currentPage = 0;
                 $scope.pages = 10;
@@ -38,15 +43,15 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
 
                     totalPages($scope.collection.length);
                     $scope.currentPage = 0;
-                }); 
+                });
 
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
                     if ($scope.pageSize > 10) {
-                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'block');
+                        nextBtn.css('display', 'block');
                     } else if ($scope.pageSize <= 10) {
-                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'none');
+                        nextBtn.css('display', 'none');
                     }
                 });
 
@@ -58,15 +63,14 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 }
 
                 $scope.moveNext = function() {
-                    iElm[0].querySelector('.gallery-image-container').scrollLeft += 400;
-                    angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'block');
+                    container.scrollLeft += 400;
+                    previousBtn.css('display', 'block');
                 }
 
                 $scope.movePrevious = function() {
-                    iElm[0].querySelector('.gallery-image-container').scrollLeft -= 400;
-                    var scroll = iElm[0].querySelector('.gallery-image-container').scrollLeft;
-                    if (scroll == 0)
-                        angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'none');
+                    container.scrollLeft -= 400;
+                    if (container.scrollLeft == 0)
+                        previousBtn.css('display', 'none');
                 }
 
                 function totalPages(length) {
