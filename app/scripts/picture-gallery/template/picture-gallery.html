@@ -18,7 +18,7 @@
     <div class="gallery-footer gallery-component">
         <div class="footer-controls">
             <button ng-disabled="currentPage==0" ng-click="currentPage=currentPage-1">Back</button>
-            {{currentPage+1}}/{{pages}}
+            <span>{{currentPage+1}}/{{pages}}</span>
             <button ng-disabled="currentPage==pages-1" ng-click="currentPage=currentPage+1">Next</button>
         </div>
     </div>

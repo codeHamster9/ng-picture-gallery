@@ -1,231 +1,284 @@
-*, *:after, *:before {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+*,
+*:after,
+*:before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
+
 .gallery-component {
-    background-image: url('../images/abstract-background.jpg');
-    background-clip: padding-box;
-    border: 1px solid #999999;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    outline: none;
-    margin-top: 0.5%;
+  background-image: url('../images/abstract-background.jpg');
+  background-clip: padding-box;
+  border: 1px solid #999999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  outline: none;
+  margin-top: 0.5%;
 }
+
 .gallery {
-    width: 98%;
-    overflow: hidden;
-    font-family: monospace;
-    font-size: medium;
-    font-weight: bolder;
-    margin: auto;
-    position: relative;
+  width: 93%;
+  overflow: hidden;
+  font-family: monospace;
+  font-size: medium;
+  font-weight: bolder;
+  margin: auto;
+  position: relative;
 }
+
 .gallery-ribbon {
-    margin-bottom: 0.5%;
+  margin-bottom: 0.5%;
 }
+
 .gallery-ribbon-controls {
-    padding-top: 1%;
-    padding-bottom: 1%;
-    margin: auto;
-    display: block;
-    width: 20%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin: auto;
+  display: block;
+  width: 20%;
 }
+
 .gallery-ribbon-controls > h1 {
-    padding-left: 17%;
+  padding-left: 17%;
 }
+
 .gallery-image-container {
-    padding: 1%;
-    height: 420px;
-    overflow-y: hidden;
-    overflow-x: hidden;
+  padding: 1%;
+  height: 300px;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
+
 .gallery-image-strip {
-    width: 260%;
+  width: 260%;
+  height: 85%;
 }
+
 .gallery-footer {
-    margin-bottom: 0.5%;
+  margin-bottom: 0.5%;
 }
+
 .footer-controls {
-    padding: 0.2%;
-    padding-left: 90%;
+  padding: 0.2%;
+  padding-left: 84%;
 }
+
+.footer-controls > span {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
 .image-frame {
-    width: 170px;
-    float: left;
-    position: relative;
-    display: inline;
+  width: 3.9%;
+  float: left;
+  position: relative;
 }
+
 .image-frame > p {
-    height: 15px;
+  height: 12px;
+  width: 76%;
+  overflow: hidden;
 }
+
 .gallery-image {
-    width: 90%;
-    border: solid;
-    border-width: 2px;
-    min-height: 300px;
-    max-height: 400px;
-    -webkit-transition: all 1s;
+  width: 75%;
+  border: solid;
+  border-width: 2px;
+  min-height: 90%;
+  -webkit-transition: all 1s;
 }
+
 .close-btn {
-    position: absolute;
-    border: none;
-    background-image: url('../images/redX.jpg');
-    background-size: 15px;
-    border-radius: 8px;
-    top: 7%;
-    left: 77%;
-    height: 14px;
-    width: 14px;
-    visibility: hidden;
-    cursor: pointer;
+  position: absolute;
+  border: none;
+  background-image: url('../images/redX.jpg');
+  background-size: 12px;
+  border-radius: 8px;
+  top: 10%;
+  left: 60.0%;
+  height: 12px;
+  width: 13px;
+  visibility: hidden;
+  cursor: pointer;
 }
+
 .arrowBtn {
-    display: none;
-    background-size: 35px;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    opacity: 0.7;
-    z-index: 1000;
-    cursor: pointer;
+  display: none;
+  background-size: 35px;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0.7;
+  z-index: 1000;
+  cursor: pointer;
 }
+
 .previousBtn {
-    background-image: url('http://www.wpclipart.com/signs_symbol/button/metal_buttons/arrow_button_metal_silver_left.png');
-    top: 48%;
-    left: 2%;
+  background-image: url('../images/arrow_button_metal_silver_left.png');
+  top: 77%;
+  left: 2%;
 }
+
 .nextBtn {
-    background-image: url('http://www.wpclipart.com/signs_symbol/button/metal_buttons/arrow_button_metal_silver_right.png');
-    top: 48%;
-    left: 96%;
+  background-image: url('../images/arrow_button_metal_silver_right.png');
+  top: 77%;
+  left: 96%;
 }
+
 button {
-    border-radius: 5px;
+  border-radius: 5px;
 }
+
 .modal-open {
-    overflow: hidden;
+  overflow: hidden;
 }
+
 .modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    display: none;
-    overflow: auto;
-    overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
 }
+
 .modal.fade .modal-dialog {
-    -webkit-transform: translate(0, -25%);
-    transform: translate(0, -25%);
-    transition: -webkit-transform 0.3s ease-out;
-    transition: transform 0.3s ease-out;
+  -webkit-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  transition: -webkit-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
 }
+
 .modal.in .modal-dialog {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
 }
+
 .modal-dialog {
-    position: relative;
-    z-index: 1050;
-    width: auto;
-    margin: 10px;
+  position: relative;
+  z-index: 1050;
+  width: auto;
+  margin: 10px;
 }
+
 .modal-content {
-    position: relative;
-    background-image: url('../images/abstract-background.jpg');
-    border: 1px solid #999999;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    outline: none;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    background-clip: padding-box;
-    color: white;
+  position: relative;
+  background-image: url('../images/abstract-background.jpg');
+  border: 1px solid #999999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  outline: none;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  color: white;
 }
+
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1030;
-    background-color: #000000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  background-color: #000000;
 }
+
 .modal-backdrop.fade {
-    opacity: 0;
-    filter: alpha(opacity=0);
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
+
 .modal-backdrop.in {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }
+
 .modal-header {
-    min-height: 16.428571429px;
-    padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
+  min-height: 16.428571429px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
 }
+
 .modal-header .close {
-    margin-top: -2px;
+  margin-top: -2px;
 }
+
 .modal-title {
-    margin: 0;
-    line-height: 1.428571429;
+  margin: 0;
+  line-height: 1.428571429;
 }
+
 .modal-body {
-    position: relative;
-    padding: 20px;
+  position: relative;
+  padding: 20px;
 }
+
 .modal-body > img {
-    width: 560px;
-    height: 500px;
+  width: 560px;
+  height: 500px;
 }
+
 .modal-footer {
-    padding: 19px 20px 20px;
-    margin-top: 15px;
-    border-top: 1px solid #e5e5e5;
-    display: -webkit-box;
+  padding: 19px 20px 20px;
+  margin-top: 15px;
+  border-top: 1px solid #e5e5e5;
+  display: -webkit-box;
 }
+
 .modal-footer > p {
-    margin-top: 1%;
-    margin-right: 42%;
-    margin-left: 23%;
+  margin-top: 1%;
+  margin-right: 42%;
+  margin-left: 23%;
 }
+
 .modal-footer > input {
-    left: 160%;
-    position: relative;
+  left: 160%;
+  position: relative;
 }
-.modal-footer:before, .modal-footer:after {
-    display: table;
-    content:" ";
-}
+
+.modal-footer:before,
 .modal-footer:after {
-    clear: both;
+  display: table;
+  content: " ";
 }
-.modal-footer:before, .modal-footer:after {
-    display: table;
-    content:" ";
-}
+
 .modal-footer:after {
-    clear: both;
+  clear: both;
 }
+
+.modal-footer:before,
+.modal-footer:after {
+  display: table;
+  content: " ";
+}
+
+.modal-footer:after {
+  clear: both;
+}
+
 .modal-footer .btn + .btn {
-    margin-bottom: 0;
-    margin-left: 5px;
+  margin-bottom: 0;
+  margin-left: 5px;
 }
+
 .modal-footer .btn-group .btn + .btn {
-    margin-left: -1px;
+  margin-left: -1px;
 }
+
 .modal-footer .btn-block + .btn-block {
-    margin-left: 0;
+  margin-left: 0;
 }
+
 @media screen and (min-width: 768px) {
-    .modal-dialog {
-        width: 600px;
-        margin: 30px auto;
-    }
-    .modal-content {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    }
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+
+  .modal-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
 }

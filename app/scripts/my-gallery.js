@@ -7,7 +7,7 @@
  */
 
 angular.module("my.gallery.tpls", ["template/gallery/my-gallery.html", "template/gallery/my-gallery-image.html", "template/gallery/my-gallery-popup.html"]);
-angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service('$mygallery', ['$http', '$q',
+angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service('gallerySrv', ['$http', '$q',
     function($http, $q) {
 
         var sessionStore, that = this;
@@ -32,11 +32,11 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
         };
 
         this.saveState = function(data) {
-            sessionStorage.$mygallery = angular.toJson(data);
+            sessionStorage.gallerySrv = angular.toJson(data);
         };
 
         this.restoreState = function() {
-            return angular.fromJson(sessionStorage.$mygallery);
+            return angular.fromJson(sessionStorage.gallerySrv);
         };
 
         function checkData(data) {
@@ -51,21 +51,29 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
             return flag;
         }
     }
-]).directive('myGallery', ['$modal', '$mygallery',
-    function($modal, $mygallery) {
+]).controller('galleryController', ['$scope', 'gallerySrv',
+    function($scope, gallerySrv) {
+        $scope.images = [];
+        $scope.url = 'http://127.0.0.01:9000/images.json';
+    }
+]).directive('myGallery', ['$modal', 'gallerySrv',
+    function($modal, gallerySrv) {
         return {
             scope: {
                 collection: '=?'
             },
             restrict: 'E',
-            templateUrl: 'template/gallery/my-gallery.html',
+            templateUrl: 'scripts/picture-gallery/template/picture-gallery.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
                 if (angular.isUndefined($scope.collection))
                     $scope.collection = [];
 
-                var originCollection = $scope.collection;
+                var originCollection = $scope.collection,
+                slideshowInterval = 1000,
+                arrowClickSpacing = 125,
+                totalWidth = 0;
 
                 $scope.currentPage = 0;
                 $scope.pages = 10;
@@ -81,6 +89,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
                     value: 'title'
                 }];
 
+
                 $scope.$watch('searchText', function(newValue, oldValue) {
                     if (newValue !== '')
                         $scope.collection = filterByText(newValue);
@@ -94,13 +103,35 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
+
+                    totalWidth = iElm[0].querySelector('.gallery-image').width * $scope.pageSize;
+
+                    if ($scope.pageSize > 10) {
+                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'block');
+                    } else if ($scope.pageSize <= 10) {
+                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'none');
+                    }
                 });
 
 
                 if (iAttrs.hasOwnProperty('url') && !iAttrs.hasOwnProperty('collection')) {
-                    $mygallery.getImages(iAttrs.url).then(function(data) {
+                    gallerySrv.getImages(iAttrs.url).then(function(data) {
                         $scope.collection = originCollection = data;
                     });
+                }
+
+                $scope.moveNext = function() {
+                    var nextScroll = 
+                    if totalWidth < 
+                    iElm[0].querySelector('.gallery-image-container').scrollLeft += arrowClickSpacing;
+                    angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'block');
+                }
+
+                $scope.movePrevious = function() {
+                    iElm[0].querySelector('.gallery-image-container').scrollLeft -= arrowClickSpacing;
+                    var scroll = iElm[0].querySelector('.gallery-image-container').scrollLeft;
+                    if (scroll == 0)
+                        angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'none');
                 }
 
                 function totalPages(length) {
@@ -131,7 +162,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
                         } else
                             stop = $interval(function() {
                                 $scope.next();
-                            }, 1000, 0);
+                            }, slideshowInterval, 0);
                     };
 
                     $scope.next = function() {
@@ -160,7 +191,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
                 $scope.open = function(image) {
 
                     var modalInstance = $modal.open({
-                        templateUrl: 'template/gallery/my-gallery-popup.html',
+                        templateUrl: 'scripts/picture-gallery/template/picture-gallery-popup.html',
                         controller: ModalInstanceCtrl,
                         backdrop: true,
                         resolve: {
@@ -203,7 +234,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
     function() {
         return {
             restrict: 'E',
-            templateUrl: 'template/gallery/my-gallery-image.html',
+            templateUrl: 'picture-gallery-image.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
@@ -252,56 +283,18 @@ angular.module('ng-pictureGallery', ['ui.bootstrap',"my.gallery.tpls"]).service(
 
 angular.module("template/gallery/my-gallery.html", []).run(["$templateCache",
     function($templateCache) {
-        $templateCache.put("template/gallery/my-gallery.html",
-            "    <div class=\"gallery\">\n" +
-            "     <div class=\"gallery-ribbon\">\n" +
-            "       <div class=\"gallery-ribbon-controls\">\n" +
-            "         <h1>Image Gallery widget</h1>\n" +
-            "         <select ng-model='pageSize' ng-options=\"page for page in pageSizes\"></select>\n" +
-            "         <input type=\"search\" class=\"gallery-searchbox\" ng-model=\"searchText\">\n" +
-            "         <select ng-model=\"sortType\" ng-options=\"st.value as st.name for st in sortTypes\"></select>\n" +
-            "        </div>\n" +
-            "    </div>\n" +
-            "    <div class=\"gallery-image-container\">\n" +
-            "        <my-gallery-image ng-repeat=\"image in collection | orderBy:sortType:false | startFrom:currentPage*pageSize | limitTo: pageSize\" ></my-gallery-image>\n" +
-            "    </div>\n" +
-            "    <div class=\"gallery-footer\">\n" +
-            "       <div class=\"footer-controls\">\n" +
-            "        <button ng-disabled=\"currentPage==0\" ng-click=\"currentPage=currentPage-1\">Back</button>\n" +
-            "        {{currentPage+1}}/{{pages}}\n" +
-            "        <button ng-disabled=\"currentPage==pages-1\" ng-click=\"currentPage=currentPage+1\">Next</button>\n" +
-            "       </div>\n" +
-            "    </div>\n" +
-            " </div> ");
+        $templateCache.put("picture-gallery.html", "<div class=\"gallery\"> <div class=\"gallery-ribbon gallery-component\"> <div class=\"gallery-ribbon-controls\"> <h1>Image Gallery widget</h1> <select ng-model='pageSize' ng-options=\"page for page in pageSizes\"></select> <input type=\"search\" class=\"gallery-searchbox\" ng-model=\"searchText\"> <select ng-model=\"sortType\" ng-options=\"st.value as st.name for st in sortTypes\"></select> </div> </div> <div class=\"gallery-image-container gallery-component\"> <button class=\"arrowBtn previousBtn\" ng-click=\"movePrevious()\"></button> <div class=\"gallery-image-strip\"> <my-gallery-image ng-repeat=\"image in filteredCollection = (collection | orderBy:sortType:false | startFrom:currentPage*pageSize | limitTo: pageSize)\"> </my-gallery-image> </div> <button class=\"arrowBtn nextBtn\" ng-click=\"moveNext()\"></button> </div> <div class=\"gallery-footer gallery-component\"> <div class=\"footer-controls\"> <button ng-disabled=\"currentPage==0\" ng-click=\"currentPage=currentPage-1\">Back</button> <span>{{currentPage+1}}/{{pages}}</span> <button ng-disabled=\"currentPage==pages-1\" ng-click=\"currentPage=currentPage+1\">Next</button> </div> </div></div>");
     }
 ]);
 
 angular.module("template/gallery/my-gallery-image.html", []).run(["$templateCache",
     function($templateCache) {
-        $templateCache.put("template/gallery/my-gallery-image.html",
-            "<div class=\"image-frame\" ng-click=\"imageClicked(image)\">\n" +
-            "    <p class=\".image-title\">{{image.title}}</p>\n" +
-            "    <img class=\"gallery-image\" ng-src={{image.url}} fallbacksrc=\"http://google.com/favicon.ico\">\n" +
-            "    <button class=\"close-btn\" ng-click=\"removeImage(image)\"></button>\n" +
-            "    <p class=\"image-date\">{{image.date | date:'short'}}</p>\n" +
-            "</div>");
+        $templateCache.put("picture-gallery-image.html", "<div class=\"image-frame\" ng-click=\"imageClicked(image)\">\n <button class=\"close-btn\" ng-click=\"removeImage(image)\"></button>\n <p class=\"image-title\">{{image.title}}</p>\n <img class=\"gallery-image\" ng-src={{image.url}} fallbacksrc=\"http://google.com/favicon.ico\">\n <p class=\"image-date\">{{image.date | date:'short'}}</p>\n</div>");
     }
 ]);
 
 angular.module("template/gallery/my-gallery-popup.html", []).run(["$templateCache",
     function($templateCache) {
-        $templateCache.put("template/gallery/my-gallery-popup.html",
-            "<div class=\"modal-header\">\n" +
-            "    <p>{{ image.title }}</p>\n" +
-            "</div>\n" +
-            "<div class=\"modal-body\">\n" +
-            "    <img ng-src={{image.url}}>\n" +
-            "</div>\n" +
-            "<div class=\"modal-footer\">\n" +
-            "    <button ng-click=\"back()\">Back</button>\n" +
-            "    <input type=\"checkbox\"  ng-model=\"slideShow\" ng-change=\"slideShowToggle()\"><p>Auto Cycle</p></input>\n" +
-            "    <button ng-click=\"next()\">Next</button>\n" +
-            "</div>\n" +
-            "");
+        $templateCache.put("picture-gallery-popup.html", "<div class=\"modal-header\">\n <b>{{ image.title }}</b>\n</div>\n<div class=\"modal-body\">\n <img ng-src={{image.url}}>\n</div>\n<div class=\"modal-footer\">\n <button ng-click=\"back()\">Back</button>\n <input type=\"checkbox\" ng-model=\"slideShow\" ng-change=\"slideShowToggle()\">\n <p>Auto Cycle</p>\n </input>\n <button ng-click=\"next()\">Next</button>\n</div>");
     }
 ]);
