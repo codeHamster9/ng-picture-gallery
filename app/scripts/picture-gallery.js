@@ -6,8 +6,8 @@
  * by idan sagi
  */
 
-angular.module("my.gallery.tpls", ["template/gallery/my-gallery.html", "template/gallery/my-gallery-image.html", "template/gallery/my-gallery-popup.html"]);
-angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service('gallerySrv', ['$http', '$q',
+angular.module("ng-pictureGallery.tpls", ["picture-gallery.html", "picture-gallery-image.html", "picture-gallery-popup.html"]);
+angular.module('ng-pictureGallery', ['ui.bootstrap', "ng-pictureGallery.tpls"]).service('gallerySrv', ['$http', '$q',
     function($http, $q) {
 
         var sessionStore, that = this;
@@ -286,19 +286,19 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service
     };
 });
 
-angular.module("template/gallery/my-gallery.html", []).run(["$templateCache",
+angular.module("picture-gallery.html", []).run(["$templateCache",
     function($templateCache) {
         $templateCache.put("picture-gallery.html", "<div class=\"gallery\"> <div class=\"gallery-ribbon gallery-component\"> <div class=\"gallery-ribbon-controls\"> <h1>Image Gallery widget</h1> <select ng-model='pageSize' ng-options=\"page for page in pageSizes\"></select> <input type=\"search\" class=\"gallery-searchbox\" ng-model=\"searchText\"> <select ng-model=\"sortType\" ng-options=\"st.value as st.name for st in sortTypes\"></select> </div> </div> <div class=\"gallery-image-container gallery-component\"> <button class=\"arrowBtn previousBtn\" ng-click=\"movePrevious()\"></button> <div class=\"gallery-image-strip\"> <my-gallery-image ng-repeat=\"image in filteredCollection = (collection | orderBy:sortType:false | startFrom:currentPage*pageSize | limitTo: pageSize)\"> </my-gallery-image> </div> <button class=\"arrowBtn nextBtn\" ng-click=\"moveNext()\"></button> </div> <div class=\"gallery-footer gallery-component\"> <div class=\"footer-controls\"> <button ng-disabled=\"currentPage==0\" ng-click=\"currentPage=currentPage-1\">Back</button> <span>{{currentPage+1}}/{{pages}}</span> <button ng-disabled=\"currentPage==pages-1\" ng-click=\"currentPage=currentPage+1\">Next</button> </div> </div></div>");
     }
 ]);
 
-angular.module("template/gallery/my-gallery-image.html", []).run(["$templateCache",
+angular.module("picture-gallery-image.html", []).run(["$templateCache",
     function($templateCache) {
         $templateCache.put("picture-gallery-image.html", "<div class=\"image-frame\" ng-click=\"imageClicked(image)\">\n <button class=\"close-btn\" ng-click=\"removeImage(image)\"></button>\n <p class=\"image-title\">{{image.title}}</p>\n <img class=\"gallery-image\" ng-src={{image.url}} fallbacksrc=\"http://google.com/favicon.ico\">\n <p class=\"image-date\">{{image.date | date:'short'}}</p>\n</div>");
     }
 ]);
 
-angular.module("template/gallery/my-gallery-popup.html", []).run(["$templateCache",
+angular.module("picture-gallery-popup.html", []).run(["$templateCache",
     function($templateCache) {
         $templateCache.put("picture-gallery-popup.html", "<div class=\"modal-header\">\n <b>{{ image.title }}</b>\n</div>\n<div class=\"modal-body\">\n <img ng-src={{image.url}}>\n</div>\n<div class=\"modal-footer\">\n <button ng-click=\"back()\">Back</button>\n <input type=\"checkbox\" ng-model=\"slideShow\" ng-change=\"slideShowToggle()\">\n <p>Auto Cycle</p>\n </input>\n <button ng-click=\"next()\">Next</button>\n</div>");
     }
