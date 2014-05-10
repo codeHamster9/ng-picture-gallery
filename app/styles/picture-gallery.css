@@ -65,7 +65,7 @@
     border-width: 2px;
     min-height: 300px;
     max-height: 400px;
-    -webkit-transition: all 1s;
+    -webkit-transition: all 2s;
 }
 .close-btn {
     position: absolute;
@@ -91,12 +91,12 @@
     cursor: pointer;
 }
 .previousBtn {
-    background-image: url('http://www.wpclipart.com/signs_symbol/button/metal_buttons/arrow_button_metal_silver_left.png');
+    background-image: url('../images/arrow_button_metal_silver_left.png');
     top: 48%;
     left: 2%;
 }
 .nextBtn {
-    background-image: url('http://www.wpclipart.com/signs_symbol/button/metal_buttons/arrow_button_metal_silver_right.png');
+    background-image: url('../images/arrow_button_metal_silver_right.png');
     top: 48%;
     left: 96%;
 }
