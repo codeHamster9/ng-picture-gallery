@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ng-pictureGallery').service('$mygallery', ['$http', '$q',
+angular.module('ng-pictureGallery').service('gallerySrv', ['$http', '$q',
   function($http, $q) {
 
     var sessionStore, that = this;
@@ -27,11 +27,11 @@ angular.module('ng-pictureGallery').service('$mygallery', ['$http', '$q',
     };
 
     this.saveState = function(data) {
-      sessionStorage.$mygallery = angular.toJson(data);
+      sessionStorage.gallerySrv = angular.toJson(data);
     };
 
     this.restoreState = function() {
-      return angular.fromJson(sessionStorage.$mygallery);
+      return angular.fromJson(sessionStorage.gallerySrv);
     };
 
     function checkData(data) {

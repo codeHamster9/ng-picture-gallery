@@ -1,6 +1,6 @@
 'use strict';
-angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygallery',
-    function($modal, $mygallery) {
+angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySrv',
+    function($modal, gallerySrv) {
         return {
             scope: {
                 collection: '=?'
@@ -14,7 +14,10 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                     $scope.collection = [];
 
                 var originCollection = $scope.collection,
-                    nextBtn, previousBtn, container;
+                    slideshowInterval = 1000,
+                    arrowClickSpacing = 125,
+                    totalWidth = 0,
+                    nextBtn, previousBtn, container, strip;
 
                 container = iElm[0].getElementsByClassName('gallery-image-container')[0];
                 nextBtn = angular.element(iElm[0].getElementsByClassName('nextBtn'));
@@ -48,6 +51,9 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
+
+                    totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
+
                     if ($scope.pageSize > 10) {
                         nextBtn.css('display', 'block');
                     } else if ($scope.pageSize <= 10) {
@@ -57,18 +63,21 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
 
 
                 if (iAttrs.hasOwnProperty('url') && !iAttrs.hasOwnProperty('collection')) {
-                    $mygallery.getImages(iAttrs.url).then(function(data) {
+                    gallerySrv.getImages(iAttrs.url).then(function(data) {
                         $scope.collection = originCollection = data;
                     });
                 }
 
                 $scope.moveNext = function() {
-                    container.scrollLeft += 400;
+                    if (container.scrollLeft < totalWidth)
+                    container.scrollLeft += arrowClickSpacing;
                     previousBtn.css('display', 'block');
                 }
 
                 $scope.movePrevious = function() {
-                    container.scrollLeft -= 400;
+                    if (container.scrollLeft > 0)
+                        container.scrollLeft -= arrowClickSpacing;
+
                     if (container.scrollLeft == 0)
                         previousBtn.css('display', 'none');
                 }
@@ -101,7 +110,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                         } else
                             stop = $interval(function() {
                                 $scope.next();
-                            }, 1000, 0);
+                            }, slideshowInterval, 0);
                     };
 
                     $scope.next = function() {
@@ -164,7 +173,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', '$mygaller
                     $scope.collection.splice(itemToRemove, 1);
                     originCollection.splice(itemToRemove, 1);
                     totalPages($scope.collection.length);
-                    $mygallery.saveState(originCollection);
+                    gallerySrv.saveState(originCollection);
                 });
             }
         };

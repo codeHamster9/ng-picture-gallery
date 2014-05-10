@@ -71,9 +71,14 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service
                     $scope.collection = [];
 
                 var originCollection = $scope.collection,
-                slideshowInterval = 1000,
-                arrowClickSpacing = 125,
-                totalWidth = 0;
+                    slideshowInterval = 1000,
+                    arrowClickSpacing = 125,
+                    totalWidth = 0,
+                    nextBtn, previousBtn, container, strip;
+
+                container = iElm[0].getElementsByClassName('gallery-image-container')[0];
+                nextBtn = angular.element(iElm[0].getElementsByClassName('nextBtn'));
+                previousBtn = angular.element(iElm[0].getElementsByClassName('previousBtn'));
 
                 $scope.currentPage = 0;
                 $scope.pages = 10;
@@ -104,12 +109,12 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
 
-                    totalWidth = iElm[0].querySelector('.gallery-image').width * $scope.pageSize;
+                    totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
 
                     if ($scope.pageSize > 10) {
-                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'block');
+                        nextBtn.css('display', 'block');
                     } else if ($scope.pageSize <= 10) {
-                        angular.element(iElm[0].querySelector('.nextBtn')).css('display', 'none');
+                        nextBtn.css('display', 'none');
                     }
                 });
 
@@ -121,18 +126,18 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service
                 }
 
                 $scope.moveNext = function() {
-                    var nextScroll = 
-                    if totalWidth < 
-                    iElm[0].querySelector('.gallery-image-container').scrollLeft += arrowClickSpacing;
-                    angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'block');
-                }
+                    if (container.scrollLeft < totalWidth)
+                        container.scrollLeft += arrowClickSpacing;
+                    previousBtn.css('display', 'block');
+                };
 
                 $scope.movePrevious = function() {
-                    iElm[0].querySelector('.gallery-image-container').scrollLeft -= arrowClickSpacing;
-                    var scroll = iElm[0].querySelector('.gallery-image-container').scrollLeft;
-                    if (scroll == 0)
-                        angular.element(iElm[0].querySelector('.previousBtn')).css('display', 'none');
-                }
+                    if (container.scrollLeft > 0)
+                        container.scrollLeft -= arrowClickSpacing;
+
+                    if (container.scrollLeft === 0)
+                        previousBtn.css('display', 'none');
+                };
 
                 function totalPages(length) {
                     if (length === 1)
@@ -225,7 +230,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "my.gallery.tpls"]).service
                     $scope.collection.splice(itemToRemove, 1);
                     originCollection.splice(itemToRemove, 1);
                     totalPages($scope.collection.length);
-                    $mygallery.saveState(originCollection);
+                    gallerySrv.saveState(originCollection);
                 });
             }
         };
