@@ -8,9 +8,9 @@ Showing angular powers
 
 install guide :
 
-1.make sure angular-bootstrap is included in your project
-2.add the picture-gallery.js and css files to the project
-3.drop the image files in ../images
+1.make sure angular-bootstrap is included in your project.
+2.add the picture-gallery.js and css files to the project.
+3.drop the image files in ../images.
 4.add 'ng-pictureGallery' to your app dependencies
 
 congrats you now have ng-pictureGallery in your project
