@@ -6,7 +6,7 @@ Showing angular powers
 
  
 
-install guide :
+__install guide :__
 
 1. make sure angular-bootstrap is included in your project.
 2. add the picture-gallery.js and css files to the project.
@@ -16,11 +16,11 @@ install guide :
 congrats you now have ng-pictureGallery in your project
 
 
-usage :
+__usage :__
 
-in your view.html file add the following tag 
+in your view.html file add the following tag
 
-    <my-gallery collection="" url="" pagesizes="" defaultsize=""/>    
+    <my-gallery collection="" url="" pagesizes="" defaultsize=""/>   
 
 
 the directive accepts 4 attributes :
@@ -33,15 +33,15 @@ the directive accepts 4 attributes :
 
 the directive can be used in 2 ways :
 
-1.just specify a url and let the magic happen.
+1. just specify a url and let the magic happen.
 
-2.consume the gallerySrv service in your controller 
+2. consume the gallerySrv service in your controller 
 and invoke the getImages() method (returns promise),
 in the markup specify the collection on your controller 
 you wish to bind to (collection="myCollection").
 
-example controller :
-```
+__example controller :__
+```ruby
 angular.module('galleryApp').controller('MainCtrl', function($scope, $mygallery) {
         $scope.images = [];
         $scope.url = 'path/to/images';
