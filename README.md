@@ -44,13 +44,13 @@ example controller :
 
 `angular.module('galleryApp').controller('MainCtrl', function($scope, $mygallery) {`
 
-        $scope.images = [];
-        $scope.url = 'path/to/images';       
+        `$scope.images = [];`
+        `$scope.url = 'path/to/images';`
 
-        $mygallery.getImages(url).then(function(data) {
-            $scope.images = data;
-        });
-    });
+        `$mygallery.getImages(url).then(function(data) {`
+            `$scope.images = data;`
+        `});`
+    `});`
 
  `<my-gallery collection="images"/>`
 
