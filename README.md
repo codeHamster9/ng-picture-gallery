@@ -42,10 +42,10 @@ you wish to bind to (collection="myCollection").
 
 __example controller :__
 ```ruby
-angular.module('galleryApp').controller('MainCtrl', function($scope, $mygallery) {
+angular.module('galleryApp').controller('aCtrl', function($scope, gallerySrv) {
         $scope.images = [];
         $scope.url = 'path/to/images';
-        $mygallery.getImages(url).then(function(data) {
+        gallerySrv.getImages(url).then(function(data) {
             $scope.images = data;
         });
 });
