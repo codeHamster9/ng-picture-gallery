@@ -51,5 +51,3 @@ angular.module('galleryApp').controller('MainCtrl', function($scope, $mygallery)
 });
 ```
  `<my-gallery collection="images"/>`
-
-<code>
