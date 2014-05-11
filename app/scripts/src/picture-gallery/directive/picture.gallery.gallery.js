@@ -6,7 +6,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
                 collection: '=?'
             },
             restrict: 'E',
-            templateUrl: 'scripts/picture-gallery/template/picture-gallery.html',
+            templateUrl: 'scripts/src/picture-gallery/template/picture-gallery.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
@@ -51,6 +51,8 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
+
+                    container.scrollLeft = 0;
 
                     totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
 
@@ -118,6 +120,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
                             index = 0;
                         else index++;
                         $scope.image = items.collection[index];
+
                     };
 
                     $scope.back = function() {
@@ -139,7 +142,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
                 $scope.open = function(image) {
 
                     var modalInstance = $modal.open({
-                        templateUrl: 'scripts/picture-gallery/template/picture-gallery-popup.html',
+                        templateUrl: 'scripts/src/picture-gallery/template/picture-gallery-popup.html',
                         controller: ModalInstanceCtrl,
                         backdrop: true,
                         resolve: {

@@ -63,7 +63,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "ng-pictureGallery.tpls"]).
                 collection: '=?'
             },
             restrict: 'E',
-            templateUrl: 'scripts/picture-gallery/template/picture-gallery.html',
+            templateUrl: 'picture-gallery.html',
             replace: true,
             link: function($scope, iElm, iAttrs, controller) {
 
@@ -108,6 +108,8 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "ng-pictureGallery.tpls"]).
                 $scope.$watch('pageSize', function(newValue, oldValue) {
                     $scope.currentPage = Math.floor(($scope.currentPage * oldValue) / newValue);
                     totalPages($scope.collection.length);
+
+                    container.scrollLeft = 0;
 
                     totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
 
@@ -196,7 +198,7 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "ng-pictureGallery.tpls"]).
                 $scope.open = function(image) {
 
                     var modalInstance = $modal.open({
-                        templateUrl: 'scripts/picture-gallery/template/picture-gallery-popup.html',
+                        templateUrl: 'picture-gallery-popup.html',
                         controller: ModalInstanceCtrl,
                         backdrop: true,
                         resolve: {
@@ -266,20 +268,21 @@ angular.module('ng-pictureGallery', ['ui.bootstrap', "ng-pictureGallery.tpls"]).
             }
         };
     }
-).directive('fallbacksrc', function() {
-    return {
+).directive('fallbacksrc',
+    function() {
+        return {
 
-        compile: function compile(tElement, tAttrs, transclude) {
-            return {
-                pre: function preLink(scope, iElement, iAttrs, controller) {
-                    iElement.bind('load', function() {
-                        angular.element(this).attr("ng-src", iAttrs.fallbacksrc);
-                    });
-                }
-            };
-        }
-    };
-}).filter('startFrom', function() {
+            compile: function compile(tElement, tAttrs, transclude) {
+                return {
+                    pre: function preLink(scope, iElement, iAttrs, controller) {
+                        iElement.bind('load', function() {
+                            angular.element(this).attr("ng-src", iAttrs.fallbacksrc);
+                        });
+                    }
+                };
+            }
+        };
+    }).filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int
         return input.slice(start);
