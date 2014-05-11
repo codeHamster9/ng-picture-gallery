@@ -42,9 +42,7 @@ you wish to bind to (collection="myCollection").
 
 example controller :
 
-
-angular.module('galleryApp').controller('MainCtrl',
-    function($scope, $mygallery) {
+`angular.module('galleryApp').controller('MainCtrl', function($scope, $mygallery) {`
 
         $scope.images = [];
         $scope.url = 'path/to/images';       
@@ -54,4 +52,6 @@ angular.module('galleryApp').controller('MainCtrl',
         });
     });
 
- <my-gallery collection="images"/>
+ `<my-gallery collection="images"/>`
+
+<code>
