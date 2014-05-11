@@ -40,8 +40,10 @@ and invoke the getImages() method (returns promise),
 in the markup specify the collection on your controller 
 you wish to bind to (collection="myCollection").
 
+there is also a build-in controller called 'galleryController'.
+
 __example controller :__
-```ruby
+```js
 angular.module('galleryApp').controller('aCtrl', function($scope, gallerySrv) {
         $scope.images = [];
         $scope.url = 'path/to/images';
