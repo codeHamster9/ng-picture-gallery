@@ -25,8 +25,8 @@ in your view.html file add the following tag
 
 the directive accepts 4 attributes :
 
-1.collection  : creates an isolated scope and bind to a collection in your controller
-2.url         : the url for your images ('http://route/to/my/images.json')
+1.collection  : creates an isolated scope and bind to a collection in your controller \n
+2.url         : the url for your images ('http://route/to/my/images.json') \n
 3.pagesizes   : sets pages sizes for paging accepts array (default is [5,10,15,20])
 4.defaultsize : sets default page size (default is 10)
 
