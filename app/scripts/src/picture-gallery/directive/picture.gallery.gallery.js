@@ -8,6 +8,15 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
             restrict: 'E',
             templateUrl: 'scripts/src/picture-gallery/template/picture-gallery.html',
             replace: true,
+            controller: function($scope, $element, $attrs, $transclude) {
+                this.openModal = function(image) {
+                    $scope.open(image);
+                }
+
+                this.removeImage = function(image) {
+                    $scope.removeItem(image);
+                };
+            },
             link: function($scope, iElm, iAttrs, controller) {
 
                 if (angular.isUndefined($scope.collection))
@@ -54,7 +63,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
 
                     container.scrollLeft = 0;
 
-                    totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
+                    // totalWidth = iElm[0].querySelector('.image-frame').clientWidth * ($scope.pageSize - 10);
 
                     if ($scope.pageSize > 10) {
                         nextBtn.css('display', 'block');
@@ -72,7 +81,7 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
 
                 $scope.moveNext = function() {
                     if (container.scrollLeft < totalWidth)
-                    container.scrollLeft += arrowClickSpacing;
+                        container.scrollLeft += arrowClickSpacing;
                     previousBtn.css('display', 'block');
                 }
 
@@ -167,17 +176,17 @@ angular.module('ng-pictureGallery').directive('myGallery', ['$modal', 'gallerySr
                     return 0;
                 }
 
-                $scope.$on('imageClicked', function(event, message) {
-                    $scope.open(message);
-                });
+                // $scope.$on('imageClicked', function(event, message) {
+                //     $scope.open(message);
+                // });
 
-                $scope.$on('removeClicked', function(event, message) {
-                    var itemToRemove = $scope.collection.indexOf(message);
+                $scope.removeItem = function(image) {
+                    var itemToRemove = $scope.collection.indexOf(image);
                     $scope.collection.splice(itemToRemove, 1);
                     originCollection.splice(itemToRemove, 1);
                     totalPages($scope.collection.length);
                     gallerySrv.saveState(originCollection);
-                });
+                };
             }
         };
     }
